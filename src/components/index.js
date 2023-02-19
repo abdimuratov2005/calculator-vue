@@ -1,9 +1,7 @@
 import Calculator from './Calculator.vue';
-import Day from '../views/Day.vue';
-import Night from '../views/Night.vue'
+import Rendered from './Rendered.vue';
 
 export default [
     Calculator,
-    Day,
-    Night
+    Rendered,
 ]

@@ -1,5 +1,7 @@
 <template>
-    <calculator />
+    <div class="app">
+      <calculator />
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,7 @@
 </script>
 
 <style lang="scss">
-    
+    .app{
+      width: 100%;
+    }
 </style>

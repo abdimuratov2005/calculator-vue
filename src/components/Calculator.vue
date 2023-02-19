@@ -11,12 +11,15 @@
                         <ion-icon name="sunny-outline"></ion-icon>
                     </div>
                 </button>
+
             </div>
-            <router-view 
+            
+            <rendered
                 :operations2="operations2"
                 :numbers="numbers"
                 :class="{active : nightActive}"
             />
+
         </div>
     </div>
 </template>

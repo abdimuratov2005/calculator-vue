@@ -1,14 +1,14 @@
 <template>
-    <div id="day" class="day">
-        <div class="day__container">
-            <div class="day__body" @keyup="calculator()">
+    <div id="rendered" class="rendered">
+        <div class="rendered__container">
+            <div class="rendered__body" @keyup="calculator()">
                 <input
                     type="text"
                     placeholder="0" 
                     v-model="render"
-                    class="day__render"
+                    class="rendered__render"
                 >
-                <div class="day__opertions1">
+                <div class="rendered__opertions1">
                     <button
                         type="button"
                         class="primary-styles"
@@ -31,8 +31,8 @@
                         <img :src="operation.icon" alt="">
                     </button>
                 </div>
-                <div class="day__buttons">
-                    <div class="day__opertions">
+                <div class="rendered__buttons">
+                    <div class="rendered__opertions">
                         <button 
                             type="button"
                             class="primary-styles"
@@ -46,7 +46,7 @@
                             <img :src="operation.icon" alt="">
                         </button>
                     </div>
-                    <div class="day__numbers">
+                    <div class="rendered__numbers">
                         <button 
                             type="button"
                             @click="input(number.value)"
@@ -76,6 +76,7 @@
 <script>
 
 export default {
+    name: 'rendered',
     data(){
         return{
             render: '',
@@ -83,7 +84,7 @@ export default {
                 { id: 1, value: 'Ac', style: 'color: #858585'},
             ],
             operations3: [
-                { id: 1, value: '=', style: 'background: #19ACFF; border-radius: 12px; color: #B2DAFF; box-shadow: -9px 13px 23px rgba(0, 163, 255, 0.65), inset -3px 4px 11px #B0DFFF' },
+                { id: 1, value: '=' },
             ],
             operations4: [
                 { id: 2, value: '', icon: './img/delete.svg'},
@@ -102,14 +103,17 @@ export default {
     },
     methods:{
         input(char){
-            this.render = this.render.toString();
+            if (this.render === Number){
+                this.render = '0'
+                this.render = this.render.toString()
+            }
             this.render += char
         },
         reset(){
             this.render = ''
         },
         calculator(){
-            this.render = eval(this.render)
+            this.render = '= ' + eval(this.render);
         },
         deleteNum(){
             if (this.render !== '') {
