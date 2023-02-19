@@ -60,10 +60,24 @@
   }
   &__render{
     width: 308px;
+    word-wrap: normal;
     height: 350px;
+    border: none;
+    text-align: right;
+    background: inherit;
+    font-size: 50px;
+    &:active,&:focus{
+      outline: none;
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
   }
-  &.active{
-    
+  &.active button{
+    background: #303136;
+    box-shadow: none;
   }
   &.active &__container{
     background: linear-gradient(191.34deg, #17181A -4.95%, #17181A 103.74%);
@@ -71,6 +85,9 @@
   &.active &__column{
     background: #303136;
     color: #29A8FF;
+  }
+  &.active .day__render{
+    color: #fff;
   }
   &__container {
     background: #F7F8FB;
@@ -81,37 +98,21 @@
     padding: 40px 0px;
     position: relative;
     transition: .5s all;
-
     z-index: 2;
     box-shadow: 100px 100px 80px rgba(96, 190, 255, 0.55);
   }
   &__buttons{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row-reverse;
+
   }
-  &__column{
-    cursor: pointer;
-    background: linear-gradient(129.7deg, rgba(255, 255, 255, 0.6) -9.69%, rgba(255, 255, 255, 0.4) 114.23%);
-    border-radius: 16px;
-    font-size: 32px;
-    width: 62px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    justify-content: center;
-    &:not(:last-child){
-      margin: 0px 20px 16px 0px;
-    }
-  }
+}
+.result{
+    
 }
 
 .column-one,
-.column-two,
-.column-three,
-.column-four,
-.column-five {
+.column-two{
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -133,4 +134,33 @@
     margin: 0px 0px 18px 20px;
   }
   position: relative;
+}
+
+.primary-styles{
+  cursor: pointer;
+  background: linear-gradient(129.7deg, rgba(255, 255, 255, 0.6) -9.69%, rgba(255, 255, 255, 0.4) 114.23%);
+  border-radius: 16px;
+  font-size: 32px;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  justify-content: center;
+  border: none;
+  margin: 0px 0px 10px;
+}
+
+.day__numbers{
+  margin: 0px 20px 0px 0px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+}
+.day__opertions1{
+  display: flex;
+  position: relative;
+  top: 40px;
+  justify-content: space-around;
+  width: 100%;  
 }

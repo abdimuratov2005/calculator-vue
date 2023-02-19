@@ -1,76 +1,71 @@
 <template>
     <div id="day" class="day">
         <div class="day__container">
-            <div class="day__body">
-                <div class="day__render">
-                    <div>
-                        {{ render }}
-                    </div>
+            <div class="day__body" @keyup="calculator()">
+                <input
+                    type="text"
+                    placeholder="0" 
+                    v-model="render"
+                    class="day__render"
+                >
+                <div class="day__opertions1">
+                    <button
+                        type="button"
+                        class="primary-styles"
+                        :style="operation.style"
+                        @click="reset()"
+                        :key="operation.id"
+                        v-for="operation in operations1"
+                    >
+                        {{ operation.value }}
+                    </button>
+                    <button
+                        type="button"
+                        class="primary-styles"
+                        :style="operation.style"
+                        @click="deleteNum(numbers.value)"
+                        :key="operation.id"
+                        v-for="operation in operations4"
+                    >
+                        {{ operation.operation }}
+                        <img :src="operation.icon" alt="">
+                    </button>
                 </div>
                 <div class="day__buttons">
-                    <div class="column-btns">
-                        <div  class="column-one">
-                            <div
-                                class="day__column column1" 
-                                v-for="column1s in column1" 
-                                :style="column1s.style"
-                                :key="column1s.id"
-                                >
-                                {{ column1s.value }}
-                                
-                                <img :src="column1s.icon">
-                            </div>
-                        </div>
-                        <div class="column-two">
-                            <div 
-                                class="day__column column2" 
-                                v-for="column2s in column2"
-                                :style="column2s.style"
-                                @click="render = column2s.value"
-                                :key="column2s.id">
-                                {{ column2s.value }}
-                            </div>
-                        </div>
-                        <div 
-                            class="column-three">
-                            <div 
-                                class="day__column column3" 
-                                v-for="column3s in column3" 
-                                :style="column3s.style"
-                                :key="column3s.id">
-                                {{ column3s.value }}
-                            </div>
-                        </div>
-                        <div class="column-four">
-                            <div 
-                                class="day__column column4" 
-                                v-for="column4s in column4" 
-                                :style="column4s.style"
-                                :key="column4s.id">
-                                {{ column4s.value }}
-                            </div>
-                        </div>
-                        <div class="column-five">
-                            <div 
-                                class="day__column column5" 
-                                v-for="column5s in column5" 
-                                :style="column5s.style"
-                                :key="column5s.id">
-                                {{ column5s.value }}
-                            </div>
-                        </div>
+                    <div class="day__opertions">
+                        <button 
+                            type="button"
+                            class="primary-styles"
+                            @click="input(operation.value)"
+                            :style="operation.style"
+                            :key="operation.id"
+                            v-for="operation in operations2"
+                        >
+                            {{ operation.value }}
+                            
+                            <img :src="operation.icon" alt="">
+                        </button>
                     </div>
-                    <div class="column-symbols">
-                        <div class="column-six">
-                            <div
-                                class="day__column column6" 
-                                v-for="column6s in column6" 
-                                :style="column6s.style"
-                                :key="column6s.id">
-                                {{ column6s.value }}
-                                <img :src="column6s.icon">
-                            </div>
-                        </div>
+                    <div class="day__numbers">
+                        <button 
+                            type="button"
+                            @click="input(number.value)"
+                            class="primary-styles"
+                            :style="number.style"
+                            :key="number.id"
+                            v-for="number in numbers"
+                        >
+                            {{ number.value }}
+                        </button>
+                        <button
+                            type="button"
+                            @click="calculator()"
+                            class="primary-styles result"
+                            :style="operations3s.style"
+                            v-for="operations3s in operations3"
+                        >
+                            {{operations3s.value}}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -81,36 +76,48 @@
 <script>
 
 export default {
-    props: {
-        column1: {
-            type: Array,
-            required: true
-        },
-        column2: {
-            type: Array,
-            required: true
-        },
-        column3: {
-            type: Array,
-            required: true
-        },
-        column4: {
-            type: Array,
-            required: true
-        },
-        column5: {
-            type: Array,
-            required: true
-        },
-        column6: {
-            type: Array,
-            required: true
-        },
-        render: {
-            type: String,
-            required: true
+    data(){
+        return{
+            render: '',
+            operations1: [
+                { id: 1, value: 'Ac', style: 'color: #858585'},
+            ],
+            operations3: [
+                { id: 1, value: '=', style: 'background: #19ACFF; border-radius: 12px; color: #B2DAFF; box-shadow: -9px 13px 23px rgba(0, 163, 255, 0.65), inset -3px 4px 11px #B0DFFF' },
+            ],
+            operations4: [
+                { id: 2, value: '', icon: './img/delete.svg'},
+            ],
         }
     },
+    props: {
+        operations2: {
+            type: Array,
+            required: true
+        },
+        numbers: {
+            type: Array,
+            required: true
+        },
+    },
+    methods:{
+        input(char){
+            this.render = this.render.toString();
+            this.render += char
+        },
+        reset(){
+            this.render = ''
+        },
+        calculator(){
+            this.render = eval(this.render)
+        },
+        deleteNum(){
+            if (this.render !== '') {
+                this.render = this.render.toString().slice(0, -1)
+            }
+            
+        },
+    }
 }
 </script>
 
