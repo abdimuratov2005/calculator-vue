@@ -1,56 +1,104 @@
 <template>
-    <div id="calculator" class="calculator">
-        <div class="calculator__body">
-            <div class="calculator__switch">
-                
-                <button @click="nightActive =! nightActive" type="button">
-                    <div v-if="nightActive">
-                        <ion-icon name="moon-outline"></ion-icon>
+    <div id="rendered" class="rendered">
+        <div class="rendered__container">
+            <div class="rendered__body" @keyup="setCalculator()">
+                <input
+                    type="text"
+                    placeholder="0" 
+                    v-model="render"
+                    class="rendered__render"
+                >
+                <div class="rendered__opertions1">
+                    <button
+                        type="button"
+                        class="primary-styles"
+                        :style="operation.style"
+                        @click="setReset()"
+                        :key="operation.id"
+                        v-for="operation in operations1"
+                    >
+                        {{ operation.value }}
+                    </button>
+                    <button
+                        type="button"
+                        class="primary-styles"
+                        :style="operation.style"
+                        @click="setDeleteNum(numbers.value)"
+                        :key="operation.id"
+                        v-for="operation in operations4"
+                    >
+                        {{ operation.operation }}
+                        <img :src="operation.icon" alt="">
+                    </button>
+                </div>
+                <div class="rendered__buttons">
+                    <div class="rendered__opertions">
+                        <button 
+                            type="button"
+                            class="primary-styles"
+                            @click="setInput(operation.value)"
+                            :style="operation.style"
+                            :key="operation.id"
+                            v-for="operation in operations2"
+                        >
+                            {{ operation.value }}
+                            
+                            <img :src="operation.icon" alt="">
+                        </button>
                     </div>
-                    <div v-else>
-                        <ion-icon name="sunny-outline"></ion-icon>
-                    </div>
-                </button>
+                    <div class="rendered__numbers">
+                        <button 
+                            type="button"
+                            @click="setInput(number.value)"
+                            class="primary-styles"
+                            :style="number.style"
+                            :key="number.id"
+                            v-for="number in numbers"
+                        >
+                            {{ number.value }}
+                        </button>
+                        <button
+                            type="button"
+                            @click="setCalculator()"
+                            class="primary-styles result"
+                            :style="operations3s.style"
+                            v-for="operations3s in operations3"
+                            :key="operations3s.id"
 
+                        >
+                            {{operations3s.value}}
+                        </button>
+                    </div>
+                </div>
             </div>
-            
-            <rendered
-                :operations2="operations2"
-                :numbers="numbers"
-                :class="{active : nightActive}"
-            />
-
         </div>
     </div>
 </template>
 
 <script>
-export default {  
-    name: 'calculator',
-    data() {
-        return {
-            nightActive: false,
-            operations2: [
-                { id: 1, value: '*', style: 'background: #ADE2FF; border-radius: 12px; color: #109DFF' },
-                { id: 2, value: '-', style: 'background: #ADE2FF; border-radius: 12px; color: #109DFF' },
-                { id: 3, value: '+', style: 'background: #ADE2FF; border-radius: 12px; color: #109DFF' },
-                { id: 4, value: '/', style: 'background: #ADE2FF; border-radius: 12px; color: #109DFF' },
-            ],
-            numbers: [
-                { id: 1, value: '7', style: 'color: #109DFF' },
-                { id: 2, value: '8', style: 'color: #109DFF' },
-                { id: 3, value: '9', style: 'color: #109DFF' },
-                { id: 4, value: '4', style: 'color: #109DFF' },
-                { id: 5, value: '5', style: 'color: #109DFF' },
-                { id: 6, value: '6', style: 'color: #109DFF' },
-                { id: 7, value: '1', style: 'color: #109DFF' },
-                { id: 8, value: '2', style: 'color: #109DFF' },
-                { id: 9, value: '3', style: 'color: #109DFF' },
-                { id: 10, value: '0', style: 'color: #109DFF'},
-                { id: 11, value: '.', style: 'color: #109DFF' },
-            ],
-        }
+import { mapMutations, mapState } from 'vuex'
+
+
+export default {
+    name: 'rendered',
+    computed: {
+        ...mapState({
+            render: state => state.render,
+            operations1: state => state.operations1,
+            operations2: state => state.operations2,
+            operations3: state => state.operations3,
+            operations4: state => state.operations4,
+            numbers: state => state.numbers,
+        })
     },
+    methods:{
+        ...mapMutations({
+            setInput: 'setInput',
+            setReset: 'setReset',
+            setCalculator: 'setCalculator',
+            setDeleteNum: 'setDeleteNum'
+        })
+    }
 }
 </script>
 
