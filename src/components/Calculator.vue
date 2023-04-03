@@ -84,11 +84,11 @@ export default {
     computed: {
         ...mapState({
             render: state => state.render,
-            operations1: state => state.operations1,
-            operations2: state => state.operations2,
-            operations3: state => state.operations3,
-            operations4: state => state.operations4,
-            numbers: state => state.numbers,
+            operations1: state => state.operations.operations1,
+            operations2: state => state.operations.operations2,
+            operations3: state => state.operations.operations3,
+            operations4: state => state.operations.operations4,
+            numbers: state => state.numbers.numbers,
         })
     },
     methods:{
