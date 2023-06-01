@@ -1,11 +1,11 @@
 <template>
     <div id="rendered" class="rendered">
         <div class="rendered__container">
-            <div class="rendered__body" @keyup="setCalculator()">
+            <div class="rendered__body" @keyup="store.setCalculator()">
                 <input
                     type="text"
                     placeholder="0" 
-                    v-model="render"
+                    v-model="store.render"
                     class="rendered__render"
                 >
                 <div class="rendered__opertions1">
@@ -13,9 +13,9 @@
                         type="button"
                         class="primary-styles"
                         :style="operation.style"
-                        @click="setReset()"
+                        @click="store.setReset()"
                         :key="operation.id"
-                        v-for="operation in operations1"
+                        v-for="operation in store.operations1"
                     >
                         {{ operation.value }}
                     </button>
@@ -23,9 +23,9 @@
                         type="button"
                         class="primary-styles"
                         :style="operation.style"
-                        @click="setDeleteNum(numbers.value)"
+                        @click="store.setDeleteNum()"
                         :key="operation.id"
-                        v-for="operation in operations4"
+                        v-for="operation in store.operations4"
                     >
                         {{ operation.operation }}
                         <img :src="operation.icon" alt="">
@@ -36,10 +36,10 @@
                         <button 
                             type="button"
                             class="primary-styles"
-                            @click="setInput(operation.value)"
+                            @click="store.setInput(operation.value)"
                             :style="operation.style"
                             :key="operation.id"
-                            v-for="operation in operations2"
+                            v-for="operation in store.operations2"
                         >
                             {{ operation.value }}
                             
@@ -49,20 +49,20 @@
                     <div class="rendered__numbers">
                         <button 
                             type="button"
-                            @click="setInput(number.value)"
+                            @click="store.setInput(number.value)"
                             class="primary-styles"
                             :style="number.style"
                             :key="number.id"
-                            v-for="number in numbers"
+                            v-for="number in store.numbers"
                         >
                             {{ number.value }}
                         </button>
                         <button
                             type="button"
-                            @click="setCalculator()"
+                            @click="store.setCalculator()"
                             class="primary-styles result"
                             :style="operations3s.style"
-                            v-for="operations3s in operations3"
+                            v-for="operations3s in store.operations3"
                             :key="operations3s.id"
 
                         >
@@ -75,31 +75,20 @@
     </div>
 </template>
 
-<script>
-import { mapMutations, mapState } from 'vuex'
+<script setup>
+import { watch } from 'vue';
+import { useCalculatorStore } from '../store/index.js'
+const store = useCalculatorStore();
 
-
-export default {
-    name: 'rendered',
-    computed: {
-        ...mapState({
-            render: state => state.render,
-            operations1: state => state.operations.operations1,
-            operations2: state => state.operations.operations2,
-            operations3: state => state.operations.operations3,
-            operations4: state => state.operations.operations4,
-            numbers: state => state.numbers.numbers,
-        })
-    },
-    methods:{
-        ...mapMutations({
-            setInput: 'setInput',
-            setReset: 'setReset',
-            setCalculator: 'setCalculator',
-            setDeleteNum: 'setDeleteNum'
-        })
+// watcher does not work correctly
+watch(store.render, (newValue) => {
+    const regax = /^[0-9][+\-*/][0-9]/;
+    if (!regax.test(newValue)){
+        console.log('WTF!');
+    } else {
+        console.log('HAHAHAHHAHAHA');
     }
-}
+})
 </script>
 
 <style></style>

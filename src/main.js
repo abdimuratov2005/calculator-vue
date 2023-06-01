@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import './styles/style.scss'
 import App from './App.vue'
-import store from './store';
+import { createPinia } from 'pinia'
 const app = createApp(App);
 
 app
-    .use(store)
+    .use(createPinia())
     .mount('#app')
